@@ -41,7 +41,7 @@ public class SimpleDao {
 	}
 	
 	public List<Map<String,Object>> selectAll() throws SQLException{
-		String sql="select * from simple01";
+		String sql="SELECT * FROM SIMPLE01";
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		pstmt=conn.prepareStatement(sql);
 		rs=pstmt.executeQuery();
@@ -57,7 +57,7 @@ public class SimpleDao {
 	}
 	
 	public Map<String,Object> selectOne(int sabun) throws SQLException{
-		String sql="select * from simple01 where sabun=?";
+		String sql="SELECT * FROM SIMPLE01 WHERE SABUN=?";
 		Map<String,Object> map = new HashMap<>();
 		pstmt=conn.prepareStatement(sql);
 		pstmt.setInt(1, sabun);
@@ -73,7 +73,7 @@ public class SimpleDao {
 	
 	public int insertOne(int sabun, String name, int pay) throws SQLException{
 		int result=0;
-		String sql="insert into simple01 values (?,?,sysdate,?)";
+		String sql="INSERT INTO SIMPLE01 VALUES (?,?,SYSDATE,?)";
 		pstmt=conn.prepareStatement(sql);
 		pstmt.setInt(1, sabun);
 		pstmt.setString(2, name);
