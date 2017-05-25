@@ -11,16 +11,14 @@ import com.hb.model.SimpleDao;
 public class DetailController implements FrontImp {
 
 	public String execute(HttpServletRequest req){
-		SimpleDao dao;
 		try {
-			dao = new SimpleDao();
+			SimpleDao dao = new SimpleDao();
 			Map<String,Object> map=dao.selectOne(Integer.parseInt(req.getParameter("idx")));
 			req.setAttribute("bean", map);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+			dao.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "bean";
+		return "/detail.jsp";
 	}
 }
