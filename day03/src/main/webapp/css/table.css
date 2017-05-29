@@ -1,0 +1,12 @@
+	#table{
+		width: 80%;
+		border: 1px solid red;
+		margin: 0px auto;
+	}
+	.tr{
+		border-bottom: 1px solid red;
+	}
+	.tr>span{
+		display: inline-block;
+		width: 24%;
+	}
