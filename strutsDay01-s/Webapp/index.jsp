@@ -7,16 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
-list	list.do		get
-detail	detail.do	get
-
-insert	update.do	post
-update	update.do	put
-delete	update.do	delete
-
-	
-	
-	
+	<h1><a href="list.action">입장</a></h1>
 </body>
 </html>
