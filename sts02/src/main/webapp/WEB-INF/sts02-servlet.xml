@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="scott"></property>
+		<property name="password" value="tiger"></property>
+		<property name="maxActive" value="50"></property>
+		<property name="maxIdle" value="10"></property>
+		<property name="maxWait" value="-1"></property>
+	</bean>
+	
+	<bean id="daoImpl" class="com.hb.spring2.model.SimpleDao3" scope="singleton">
+		<property name="ds" ref="dataSource"></property>
+	</bean>
+
+	<!-- handlerMapping -->
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/index.do">index</prop>
+				<prop key="/list.do">selectAll</prop>
+				<prop key="/add.do">addform</prop>
+				<prop key="/insert.do">insertOne</prop>
+				<prop key="/detail.do">selectOne</prop>
+				<prop key="/edit.do">editform</prop>
+				<prop key="/update.do">updateOne</prop>
+				<prop key="/delete.do">deleteOne</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- controller bean -->
+	<bean id="index" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="main"></property>
+	</bean>
+	<bean id="selectAll" class="com.hb.spring2.controller.ListController">
+ 		<property name="dao" ref="daoImpl"></property>
+ 	</bean>
+	<bean id="addform" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="add"></property>
+	</bean>
+	<bean id="insertOne" class="com.hb.spring2.controller.InsertController" >
+ 		<property name="dao" ref="daoImpl"></property>	
+ 	</bean>
+ 	<bean id="selectOne" class="com.hb.spring2.controller.DetailController">
+ 		<property name="dao" ref="daoImpl"></property>
+ 		<property name="viewName" value="detail"></property>		
+ 	</bean>
+	<bean id="editform" class="com.hb.spring2.controller.DetailController">
+		<property name="dao" ref="daoImpl"></property> <!-- 객체 자료형 -->
+		<property name="viewName" value="edit"></property> <!-- 원시 자료형  -->
+	</bean>
+	<bean id="updateOne" class="com.hb.spring2.controller.UpdateController">
+		<property name="dao" ref="daoImpl"></property>
+		<constructor-arg name="commandClass" value="com.hb.spring2.model.SimpleVo"></constructor-arg>
+	</bean>
+	<bean id="deleteOne" class="com.hb.spring2.controller.ListController">
+		<property name="dao" ref="daoImpl"></property>
+	</bean>
+	<!-- viewResolver -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/page/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	
+</beans>
